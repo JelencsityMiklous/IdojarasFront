@@ -1,6 +1,6 @@
 const AppTitle = 'Időjárás App';
 const Author = '13. A';
-const Company = 'Bajai SZC Türr Istvàn Technikum'
+const Company = 'Jelencsity Miklós - Bajai SZC Türr Istvàn Technikum'
 const ServerUrl = 'http://localhost:3000'
 
 
@@ -62,4 +62,44 @@ setThemeBtn = (theme) => {
 }
 
 
+let render = async (view) => {
+    main.innerHTML = await (await fetch(`views/${view}.html`)).text();
+
+    switch (view) {
+        case "profile":
+            getProfile();
+            break;
+        case "main":
+            setDate();
+            await getSteps();
+            renderSteps();
+            break;
+        case "statistics":
+            await getChartData();
+            initChart();
+            break;
+        case "calendar":
+            await getCalendarData();
+            initCalendar();
+            break;
+    }
+}
+
+async function getLoggedUser() {
+    if (sessionStorage.getItem('loggedUser')) {
+        loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+        mainMenu.classList.add('hide');
+        userMenu.classList.remove('hide');
+        await render('main');
+    } else {
+        loggedUser = null;
+        mainMenu.classList.remove('hide');
+        userMenu.classList.add('hide');
+        await render('login');
+    }
+    return loggedUser;
+}
+
+
 loadTheme()
+getLoggedUser()

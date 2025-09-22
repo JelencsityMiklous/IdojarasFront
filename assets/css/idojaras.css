@@ -43,3 +43,17 @@ nav {
     border-bottom: none;
     border-radius: 8px 8px 0px 0px;
 }
+
+#getprofileBtn{
+    width: 40%;
+    margin: 0 auto;
+}
+
+#kilepesBtn{
+    color: rgb(201, 87, 87); 
+
+}
+#kilepesBtn:hover {
+    color: white;
+    text-shadow: 0px 0px 10px rgb(187, 27, 27);
+}

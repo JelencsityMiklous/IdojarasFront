@@ -27,13 +27,10 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav" id="mainMenu">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Otthon</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="#" onclick="render('login')">Belépés</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="render('registration')">Regisztráció</a>
+                                <a class="nav-link" href="#" onclick="render('register')">Regisztráció</a>
                             </li>
                         </ul>
     
@@ -51,7 +48,7 @@
                                 <a class="nav-link" href="#" onclick="render('calendar')">Naptár</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="logout()">Kilépés</a>
+                                <a class="nav-link"  id="kilepesBtn" href="#" onclick="logout()">Kilépés</a>
                             </li>
                         </ul>
                     </div>
@@ -71,6 +68,10 @@
         <script src="./assets/js/idojaras.js"></script>
     
         <!-- Controllers -->
+        <script src="./controllers/messageCtrl.js"></script>
+        <script src="./controllers/userCtrl.js"></script>
+        <script src="./controllers/idojarasCtrl.js"></script>
+
 
 </body>
 </html>
