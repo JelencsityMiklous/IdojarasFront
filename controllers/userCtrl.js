@@ -34,7 +34,7 @@ async function registration() {
     }
 
     try {
-        const res = await fetch(`${ServerUrl}/users`, {
+        const res = await fetch(`${ServerURL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ async function login() {
     let user = {};
 
     try {
-        const res = await fetch(`${ServerUrl}/users/login`, {
+        const res = await fetch(`${ServerURL}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ async function getProfile() {
     const emailField = document.getElementById('emailField');
 
     try {
-        const res = await fetch(`${ServerUrl}/users/${loggedUser.id}`);
+        const res = await fetch(`${ServerURL}/users/${loggedUser.id}`);
         const user = await res.json();
         console.log(user)
         nameField.value = user.name;
@@ -140,7 +140,7 @@ async function updateProfile() {
     }
 
     try {
-        const res = await fetch(`${ServerUrl}/users/profile`, {
+        const res = await fetch(`${ServerURL}/users/profile`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -167,9 +167,9 @@ async function updateProfile() {
 
 async function updatePassword() {
     console.log('updatePassword');
-    let currentPasswordField = document.getElementById('passwordField');
-    let newPasswordField = document.getElementById('newPasswordField');
-    let confirmPasswordField = document.getElementById('newPasswordConfirmField');
+    let currentPasswordField = document.querySelector('#passwordField');
+    let newPasswordField = document.querySelector('#newPasswordField');
+    let confirmPasswordField = document.querySelector('#newPasswordConfirmField');
 
     if (currentPasswordField.value == '' || newPasswordField.value == '' || confirmPasswordField.value == '') {
         showMessage('danger', 'Hiba', 'Nem adtál meg minden adatot!');
@@ -187,7 +187,7 @@ async function updatePassword() {
     }
 
     try {
-        const res = await fetch(`${ServerUrl}/users/passmod`, {
+        const res = await fetch(`${ServerURL}/users/passmod`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -199,12 +199,11 @@ async function updatePassword() {
             })
         });
 
-        const data = await res.json();
-        showMessage('info', 'Siker', data.msg);
-        if (res.status == 200) {
-            currentPasswordField.value = "";
-            newPasswordField.value = "";
-            confirmPasswordField.value = "";
+        let data = await res.json();
+        if (res.status == 200){
+            showMessage('success', 'Ok', data.msg);
+        } else {
+            showMessage('danger', 'Hiba', data.msg);
         }
     } catch (err) {
         showMessage('danger', 'Hiba', err);

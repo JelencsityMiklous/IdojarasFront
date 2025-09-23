@@ -1,11 +1,41 @@
-<h3>Naptár</h3>
-<hr>
-<style>
-img{
-	pointer-events: none;
+/*let calEvents = [];
+
+async function getCalendarData(){
+    try{
+        let res = await fetch(`${ServerURL}/idojaras/users/${loggedUser.id}`);
+        idojarasok = await res.json();
+        calEvents = [];
+        idojarasok.forEach(idojaras => {
+            calEvents.push({
+                title  : 'Időjárás: ' + idojaras.idojarasAdat,
+                start  : idojaras.date
+              });
+        });
+      }catch(err){
+          console.log(err);
+          showMessage('danger', 'Hiba', 'Hiba az adatok lekérdezése során!'); 
+      }
 }
-</style>
-<script>
+
+function initCalendar(){
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+     
+        initialView: 'dayGridMonth',
+        locale: 'hu',
+        headerToolbar: {
+            left: 'prev,today,next',
+            center: 'title',
+            right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+        },
+        events: calEvents
+    });
+    calendar.render();
+}
+*/
+
+
+/*  */
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {            
@@ -95,6 +125,3 @@ function formatter(e) {
 } 
 
 }
-</script>	
-
-<div id="chartContainer" style="height: 370px; width: 100%; position: relative"></div>

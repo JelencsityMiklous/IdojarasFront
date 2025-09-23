@@ -11,7 +11,7 @@
     <body>
         <div class="container">
             <header>
-                <h1 id="appTitle"></h1>
+                <h1 href="#" class="btn-shine" id="appTitle"></h1>
                 <span id="themeSelector">
                     <i class="bi bi-sun-fill hide" id="lightmodeBtn"></i>
                     <i class="bi bi-moon-fill" id="darkmodeBtn"></i>
@@ -58,6 +58,20 @@
                 <!-- Ide jön a tartalom -->
             </main>
             <footer>
+                
+                
+                    <div class="container2">
+                        <div class="cloud front">
+                        <span class="left-front"></span>
+                        <span class="right-front"></span>
+                        </div>
+                        <span class="sun sunshine"></span>
+                        <span class="sun"></span>
+                        <div class="cloud back">
+                        <span class="left-back"></span>
+                        <span class="right-back"></span>
+                        </div>
+                    </div>
                 <p id="company"></p>
                 <p id="author"></p>
             </footer>
@@ -66,12 +80,16 @@
         <!-- Assets -->
         <script src="./assets/js/bootstrap.min.js"></script>
         <script src="./assets/js/idojaras.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>  
+        <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script> 
     
         <!-- Controllers -->
         <script src="./controllers/messageCtrl.js"></script>
         <script src="./controllers/userCtrl.js"></script>
         <script src="./controllers/idojarasCtrl.js"></script>
-
+        <script src="./controllers/statistics.js"></script>
+        <script src="./controllers/calendar.js"></script>
 
 </body>
 </html>

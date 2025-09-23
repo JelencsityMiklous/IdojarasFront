@@ -130,7 +130,7 @@ function renderIdojaras() {
     });
 
 }
-
+/* TODO:: */
 async function update() {
 
     let date = document.getElementById("dateField");
