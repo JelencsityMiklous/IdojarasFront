@@ -1,5 +1,5 @@
 function showMessage(severity, title, message) {
-    let messageBox = document.getElementById('messageBox');
+    let messageBox = document.querySelector('#messageBox');
     messageBox.innerHTML = '';
     let h3 = document.createElement('h3');
     let p = document.createElement('p');

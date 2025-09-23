@@ -7,7 +7,7 @@ function setDate() {
     let dateField = document.getElementById("dateField");
     dateField.setAttribute('max', today);
 }
-
+0
 /*--Hozzáadás--*/
 async function add(){
     let date = document.querySelector('#dateField').value;
@@ -236,6 +236,7 @@ async function update() {
             }
         }
     }
+    
 }
 
 
@@ -248,9 +249,10 @@ function editIdojaras(index) {
     let date = document.getElementById("dateField");
     let idojarasAdat = document.getElementById("idojarasField");
 
+
     toggleMode(true);
     date.value = idojaras[index].date;
-    idojarasAdat.value = idojaras[index].count
+    idojarasAdat.value = idojaras[index].idojarasAdat
     selectedIdojaras = idojaras[index];
 }
 
@@ -282,10 +284,11 @@ async function deleteIdojaras(index) {
 
 function cancel() {
     toggleMode(false);
-    let date = document.getElementById("dateField");
-    let idojarasAdat = document.getElementById("idojarasField");
+    let date = document.querySelector("#dateField");
+    let idojarasAdat = document.querySelector("#idojarasField");
     date.value = null;
     idojarasAdat.value = null;
+    selectedIdojaras= null;
 }
 
 function toggleMode(mode) {
