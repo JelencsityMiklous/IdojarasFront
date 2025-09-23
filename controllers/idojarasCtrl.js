@@ -20,7 +20,7 @@ async function add(){
     
     let idx = idojaras.findIndex(idojaras => idojaras.date == date && idojaras.userId == loggedUser.id);
     if (idx == -1){
-        // ha nincs, akkor instert
+        
         try{
             let res = await fetch(`${ServerURL}/idojaras` , {
                 method: 'POST',
@@ -47,7 +47,7 @@ async function add(){
             showMessage('danger', 'Hiba', 'Hiba az adatok küldése során!1'); 
         }
     }else{
-        // ha van, akkor update
+        
         try{
             let res = await fetch(`${ServerURL}/idojaras/${idojaras[idx].id}` , {
                 method: 'PATCH',
@@ -80,7 +80,7 @@ async function add(){
 
 async function getIdojaras() {
     try{
-        let res = await fetch(`${ServerURL}/idojaras/user/${loggedUser.id}`);
+        let res = await fetch(`${ServerURL}/idojaras/users/${loggedUser.id}`);
         idojaras = await res.json();
         idojaras = idojaras.sort((a,b) => new Date(b.date) - new Date(a.date));
     }catch(err){
@@ -113,7 +113,7 @@ function renderIdojaras() {
 
         td1.innerHTML = (index + 1) + '.';
         td2.innerHTML = idojaras.date;
-        td3.innerHTML = idojaras.count;
+        td3.innerHTML = idojaras.idojarasAdat;
         td4.appendChild(editBtn);
         td4.appendChild(deleteBtn);
 
@@ -138,7 +138,7 @@ async function update() {
 
     if (selectedIdojaras.date == date.value) {
         try {
-            let res = await fetch(`${ServerUrl}/idojaras/${selectedIdojaras.id}`, {
+            let res = await fetch(`${ServerURL}/idojaras/${selectedIdojaras.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -162,7 +162,7 @@ async function update() {
         }
     } else {
         try {
-            let res = await fetch(`${ServerUrl}/idojaras/${selectedIdojaras.id}`, {
+            let res = await fetch(`${ServerURL}/idojaras/${selectedIdojaras.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -186,7 +186,7 @@ async function update() {
         if (idx == -1) {
             
             try {
-                let res = await fetch(`${ServerUrl}/idojaras/upload/${loggedUser.id}`, {
+                let res = await fetch(`${ServerURL}/idojaras/upload/${loggedUser.id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -212,7 +212,7 @@ async function update() {
         } else {
             
             try {
-                let res = await fetch(`${ServerUrl}/idojaras/${idojaras[idx].id}`, {
+                let res = await fetch(`${ServerURL}/idojaras/${idojaras[idx].id}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -258,7 +258,7 @@ async function deleteIdojaras(index) {
     console.log(index);
     if (confirm('Biztosan törlöd az időjárás adatot?')) {
         try {
-            let res = await fetch(`${ServerUrl}/idojaras/${idojaras[index].id}`, {
+            let res = await fetch(`${ServerURL}/idojaras/${idojaras[index].id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'

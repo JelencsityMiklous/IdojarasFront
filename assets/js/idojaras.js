@@ -1,7 +1,7 @@
 const AppTitle = 'Időjárás App';
 const Author = '13. A';
 const Company = 'Jelencsity Miklós - Bajai SZC Türr Istvàn Technikum'
-const ServerUrl = 'http://localhost:3000'
+const ServerURL = 'http://localhost:3000'
 
 
 let title = document.getElementById('appTitle');
@@ -71,8 +71,8 @@ let render = async (view) => {
             break;
         case "main":
             setDate();
-            await getSteps();
-            renderSteps();
+            await getIdojaras();
+            renderIdojaras();
             break;
         case "statistics":
             await getChartData();
