@@ -11,6 +11,7 @@ let lightmodeBtn = document.getElementById('lightmodeBtn');
 let darkmodeBtn = document.getElementById('darkmodeBtn');
 let main = document.querySelector('main');
 
+
 /*Menu*/
 let mainMenu = document.getElementById('mainMenu');
 let userMenu = document.getElementById('userMenu');
@@ -70,16 +71,17 @@ let render = async (view) => {
             getProfile();
             break;
         case "main":
-            setDate();
+            setDate();  
             await getIdojaras();
             renderIdojaras();
+            await renderFooter()
             break;
         case "statistics":
             await getStatistics();
             initChart();
             break;
         case "calendar":
-            await getCalendarData();
+            getCalendar();
             initCalendar();
             break;
     }

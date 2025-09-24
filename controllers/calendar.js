@@ -1,14 +1,12 @@
-/*let calEvents = [];
-
 async function getCalendarData(){
     try{
         let res = await fetch(`${ServerURL}/idojaras/users/${loggedUser.id}`);
-        idojarasok = await res.json();
+        idojaras = await res.json();
         calEvents = [];
-        idojarasok.forEach(idojaras => {
+        idojaras.forEach(ido => {
             calEvents.push({
-                title  : 'Időjárás: ' + idojaras.idojarasAdat,
-                start  : idojaras.date
+                title  : 'Lépés: ' + ido.idojarasAdat,
+                start  : ido.date
               });
         });
       }catch(err){
@@ -17,26 +15,7 @@ async function getCalendarData(){
       }
 }
 
-function initCalendar(){
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-     
-        initialView: 'dayGridMonth',
-        locale: 'hu',
-        headerToolbar: {
-            left: 'prev,today,next',
-            center: 'title',
-            right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek',
-        },
-        events: calEvents
-    });
-    calendar.render();
-}
-*/
-
-
-/*  */
-window.onload = function () {
+function getCalendar() {
 
 var chart = new CanvasJS.Chart("chartContainer", {            
 	title:{
@@ -57,7 +36,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		color: "#91AAB1",
 		indexLabelFormatter: formatter,
 		dataPoints: [
-			{ label: "Monday", y: [15, 26], name: "rainy" },
+			{ label: "A", y: [1,1], name: "rainy" },
 			{ label: "Tuesday", y: [15, 27], name: "rainy" },
 			{ label: "Wednesday", y: [13, 27], name: "sunny" },
 			{ label: "Thursday", y: [14, 27], name: "sunny" },
@@ -116,9 +95,9 @@ $( window ).resize(function() {
 
 function formatter(e) { 
 	if(e.index === 0 && e.dataPoint.x === 0) {
-		return " Min " + e.dataPoint.y[e.index] + "°";
+		return "----"
 	} else if(e.index == 1 && e.dataPoint.x === 0) {
-		return " Max " + e.dataPoint.y[e.index] + "°";
+		return e.dataPoint.y[e.index] + "°";
 	} else{
 		return e.dataPoint.y[e.index] + "°";
 	}

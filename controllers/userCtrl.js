@@ -161,7 +161,7 @@ async function updateProfile() {
     } catch (err) {
         showMessage('danger', 'Hiba', err);
     }
-
+    alert('Sikeresen megváltoztattad')
     getLoggedUser();
 }
 

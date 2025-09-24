@@ -1,5 +1,6 @@
 let idojaras =  []
 let editMode = false;
+let footerSlider = document.querySelector('.marquee__group')
 
 /*--Dátum--*/
 function setDate() {
@@ -74,7 +75,9 @@ async function add(){
             showMessage('danger', 'Hiba', 'Hiba az adatok küldése során!2'); 
         }
     }
+    renderFooter()
 }
+
 
 /*--Adatok lekérdezése--*/
 
@@ -128,8 +131,43 @@ function renderIdojaras() {
         tbody.appendChild(tr);
 
     });
+}
+
+
+/* Footer */
+
+let span = document.createElement('span');
+let span2 = document.createElement('span');
+let span3 = document.createElement('span');
+
+async function renderFooter(){
+    await getIdojaras()
+    idojaras.forEach(() => {
+        getIdojaras()
+        if(idojaras[0].idojarasAdat!=""){
+            
+            span.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[0].idojarasAdat + "°C")
+            footerSlider.appendChild(span)
+        }
+        if(idojaras[1].idojarasAdat!=""){
+            
+            span2.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[1].idojarasAdat + "°C")
+            footerSlider.appendChild(span2)
+        }
+        if(idojaras[2].idojarasAdat!=""){
+            
+            span3.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[2].idojarasAdat + "°C")
+            footerSlider.appendChild(span3)
+        }
+        
+    })
+
+    let torlesgomb = document.querySelector('#FooterTorlesgomb')
+    torlesgomb.style.display="block"
 
 }
+
+
 /* TODO:: */
 async function update() {
 
@@ -259,6 +297,7 @@ function editIdojaras(index) {
 async function deleteIdojaras(index) {
     console.log(index);
     if (confirm('Biztosan törlöd az időjárás adatot?')) {
+        
         try {
             let res = await fetch(`${ServerURL}/idojaras/${idojaras[index].id}`, {
                 method: 'DELETE',
@@ -280,6 +319,10 @@ async function deleteIdojaras(index) {
             showMessage('danger', 'Hiba', 'Hiba az adatok törlése során');
         }
     }
+    renderFooter()
+    idojaras.forEach(ido => {
+        footerSlider.removeChild(`span${ido}`)
+    });
 }
 
 function cancel() {
@@ -309,3 +352,16 @@ function toggleMode(mode) {
         cancelBtn.classList.add('hide');
     }
 }
+
+async function footerTorles(){
+    await getIdojaras()
+    idojaras.forEach(() => {
+
+        while (footerSlider.firstChild) {
+            footerSlider.removeChild(myNode.lastChild);
+        }
+        }
+    
+    )
+}
+
