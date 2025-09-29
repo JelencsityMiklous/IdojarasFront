@@ -1,48 +1,59 @@
+let NaptarDate = []
+let NaptarDataMin = [];
+let NaptarDataMax = [];
+
 async function getCalendarData(){
-    try{
-        let res = await fetch(`${ServerURL}/idojaras/users/${loggedUser.id}`);
-        idojaras = await res.json();
-        calEvents = [];
-        idojaras.forEach(ido => {
-            calEvents.push({
-                title  : 'Lépés: ' + ido.idojarasAdat,
-                start  : ido.date
-              });
-        });
-      }catch(err){
-          console.log(err);
-          showMessage('danger', 'Hiba', 'Hiba az adatok lekérdezése során!'); 
-      }
+try{
+	let res = await fetch(`${ServerURL}/idojaras/users/${loggedUser.id}`);
+	
+	idojarasok = await res.json();
+	idojarasok = idojarasok.sort((a,b) => new Date(a.date) - new Date(b.date));
+	
+	idojarasok.forEach(idojaras => {
+	NaptarDate.push(idojaras.date);
+	NaptarDataMin.push(idojaras.idojarasAdatMin);
+	NaptarDataMax.push(idojaras.idojarasAdatMax);
+	});
+  }catch(err){
+	  console.log(err);
+	  showMessage('danger', 'Hiba', 'Hiba az adatok lekérdezése során!'); 
+  }
+
+  console.log(NaptarDataMax[0])
+
 }
 
-function getCalendar() {
+getCalendarData()
+
+async function getCalendar() {
+
 
 var chart = new CanvasJS.Chart("chartContainer", {            
 	title:{
-		text: "Weekly Weather Forecast"              
+		text: "Időjárás adatok"              
 	},
 	axisY: {
 		suffix: " °C",
-		maximum: 40,
+		maximum: 50,
 		gridThickness: 0
 	},
 	toolTip:{
 		shared: true,
-		content: "{name} </br> <strong>Temperature: </strong> </br> Min: {y[0]} °C, Max: {y[1]} °C"
+		content: "{name} </br> <strong>Fok: </strong> </br> Min: {y[0]} °C, Max: {y[1]} °C"
 	},
 	data: [{
 		type: "rangeSplineArea",
-		fillOpacity: 0.1,
-		color: "#91AAB1",
+		fillOpacity: 0.3,
+		color: "#91AAB0",
 		indexLabelFormatter: formatter,
 		dataPoints: [
-			{ label: "A", y: [1,1], name: "rainy" },
-			{ label: "Tuesday", y: [15, 27], name: "rainy" },
-			{ label: "Wednesday", y: [13, 27], name: "sunny" },
-			{ label: "Thursday", y: [14, 27], name: "sunny" },
-			{ label: "Friday", y: [15, 26], name: "cloudy" },
-			{ label: "Saturday", y: [17, 26], name: "sunny" },
-			{ label: "Sunday", y: [16, 27], name: "rainy" }
+			{ label: NaptarDate[0], y: [Number(NaptarDataMin[0]),Number(NaptarDataMax[0])], name: "rainy" },
+			{ label: NaptarDate[1], y: [Number(NaptarDataMin[1]),Number(NaptarDataMax[1])], name: "sunny" },
+			{ label: NaptarDate[2], y: [Number(NaptarDataMin[2]),Number(NaptarDataMax[2])], name: "rainy" },
+			{ label: NaptarDate[3], y: [Number(NaptarDataMin[3]),Number(NaptarDataMax[3])], name: "rainy" },
+			{ label: NaptarDate[4], y: [Number(NaptarDataMin[4]),Number(NaptarDataMax[4])], name: "rainy" },
+			{ label: NaptarDate[5], y: [Number(NaptarDataMin[5]),Number(NaptarDataMax[5])], name: "rainy" },
+			{ label: NaptarDate[6], y: [Number(NaptarDataMin[6]),Number(NaptarDataMax[6])], name: "rainy" }
 		]
 	}]
 });
@@ -95,9 +106,9 @@ $( window ).resize(function() {
 
 function formatter(e) { 
 	if(e.index === 0 && e.dataPoint.x === 0) {
-		return "----"
+		return " Min " + e.dataPoint.y[e.index] + "°"
 	} else if(e.index == 1 && e.dataPoint.x === 0) {
-		return e.dataPoint.y[e.index] + "°";
+		return " Max " + e.dataPoint.y[e.index] + "°";
 	} else{
 		return e.dataPoint.y[e.index] + "°";
 	}

@@ -81,8 +81,12 @@ let render = async (view) => {
             initChart();
             break;
         case "calendar":
-            getCalendar();
-            initCalendar();
+            await getCalendarData()
+             getCalendar();
+            break;
+        case "calendar2":
+            await getCalendarData2();
+            initCalendar2();
             break;
     }
 }

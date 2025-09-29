@@ -39,16 +39,19 @@
                                 <a class="nav-link" href="#" onclick="render('main')">Időjárásadatok kezelése</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="render('statistics')">Statisztika</a>
+                                <a class="nav-link" href="#" onclick="render('statistics')">Grafikon</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="render('calendar')">Heti jelentés</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#" onclick="render('profile')">Profilom</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="render('calendar')">Naptár</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"  id="kilepesBtn" href="#" onclick="logout()">Kilépés</a>
+                                <a class="nav-link" href="#" onclick="render('calendar2')">Naptár</a>
+                              </li>
+                            <li class="nav-item text-md-end">
+                                <a class="nav-link text-md-end"  id="kilepesBtn" href="#" onclick="logout()">Kilépés</a>
                             </li>
                         </ul>
                     </div>
@@ -79,6 +82,7 @@
         <script src="./assets/js/idojaras.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>  
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script> 
         <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script> 
     
         <!-- Controllers -->
@@ -87,6 +91,7 @@
         <script src="./controllers/idojarasCtrl.js"></script>
         <script src="./controllers/statistics.js"></script>
         <script src="./controllers/calendar.js"></script>
+        <script src="./controllers/calendar2.js"></script>
 
 </body>
 </html>

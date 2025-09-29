@@ -1,6 +1,7 @@
 let chart = null;
 let chartLabels = [];
-let chartData = [];
+let chartDataMin = [];
+let chartDataMax = [];
 
 
 
@@ -16,7 +17,8 @@ async function getStatistics(){
         
         idojarasok.forEach(idojaras => {
           chartLabels.push(idojaras.date);
-          chartData.push(idojaras.idojarasAdat);
+          chartDataMin.push(idojaras.idojarasAdatMin);
+          chartDataMax.push(idojaras.idojarasAdatMax);
         });
       }catch(err){
           console.log(err);
@@ -38,9 +40,18 @@ function initChart(){
             datasets: [
               {
 
-                label: loggedUser.name,
-                data: chartData,
+                label: 'Min',
+                data: chartDataMin,
                 backgroundColor: 'yellow',
+                pointStyle: 'triangle',
+                borderColor:'gray',
+                pointRadius: 10,
+                pointHoverRadius: 50,
+              },
+              {
+                label: 'Max',
+                data: chartDataMax,
+                backgroundColor: 'red',
                 pointStyle: 'triangle',
                 borderColor:'gray',
                 pointRadius: 10,

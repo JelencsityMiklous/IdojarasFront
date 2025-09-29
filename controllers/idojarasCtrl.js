@@ -12,10 +12,15 @@ function setDate() {
 /*--Hozzáadás--*/
 async function add(){
     let date = document.querySelector('#dateField').value;
-    let idojarasAdat = document.querySelector('#idojarasField').value;
+    let idojarasAdatMin = document.querySelector('#idojarasFieldMin').value;
+    let idojarasAdatMax = document.querySelector('#idojarasFieldMax').value;
 
-    if (date == '' || idojarasAdat == ''){
+    if (date == '' || idojarasAdatMin == '' || idojarasAdatMax == ''){
         showMessage('danger', 'Hiba', 'Nem adtál meg minden adatot!'); 
+        return;
+    }
+    if(idojarasAdatMax<idojarasAdatMin){
+        showMessage('danger', 'Hiba', 'A max nem lehet kisebb mint a min')
         return;
     }
     
@@ -31,7 +36,8 @@ async function add(){
                 body:  JSON.stringify({  
                     userId: loggedUser.id, 
                     date: date, 
-                    idojarasAdat: idojarasAdat 
+                    idojarasAdatMin: idojarasAdatMin,
+                    idojarasAdatMax:idojarasAdatMax 
                 })
             });
             let data = await res.json();
@@ -58,7 +64,8 @@ async function add(){
                 body:  JSON.stringify({  
                     userId: loggedUser.id, 
                     date: date, 
-                    idojarasAdat: Number(idojaras[idx].idojarasAdat) + Number(idojarasAdat) 
+                    idojarasAdatMin: Number(idojaras[idx].idojarasAdatMin) + Number(idojarasAdatMin),
+                    idojarasAdatMax: Number(idojaras[idx].idojarasAdatMax) + Number(idojarasAdatMax)  
                 })
             });
             let data = await res.json();
@@ -102,6 +109,7 @@ function renderIdojaras() {
         let td2 = document.createElement('td');
         let td3 = document.createElement('td');
         let td4 = document.createElement('td');
+        let td5 = document.createElement('td');
         let editBtn = document.createElement('button');
         let deleteBtn = document.createElement('button');
 
@@ -116,18 +124,21 @@ function renderIdojaras() {
 
         td1.innerHTML = (index + 1) + '.';
         td2.innerHTML = idojaras.date;
-        td3.innerHTML = idojaras.idojarasAdat;
-        td4.appendChild(editBtn);
-        td4.appendChild(deleteBtn);
+        td3.innerHTML = idojaras.idojarasAdatMin;
+        td4.innerHTML = idojaras.idojarasAdatMax;
+        td5.appendChild(editBtn);
+        td5.appendChild(deleteBtn);
 
         td1.classList.add('text-center');
         td3.classList.add('text-end');
         td4.classList.add('text-end');
+        td5.classList.add('text-end');
 
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
+        tr.appendChild(td5);
         tbody.appendChild(tr);
 
     });
@@ -144,19 +155,19 @@ async function renderFooter(){
     await getIdojaras()
     idojaras.forEach(() => {
         getIdojaras()
-        if(idojaras[0].idojarasAdat!=""){
+        if(idojaras[0].idojarasAdatMin!=""){
             
-            span.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[0].idojarasAdat + "°C")
+            span.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[0].idojarasAdatMin + "°C")
             footerSlider.appendChild(span)
         }
-        if(idojaras[1].idojarasAdat!=""){
+        if(idojaras[1].idojarasAdatMin!=""){
             
-            span2.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[1].idojarasAdat + "°C")
+            span2.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[1].idojarasAdatMin + "°C")
             footerSlider.appendChild(span2)
         }
-        if(idojaras[2].idojarasAdat!=""){
+        if(idojaras[2].idojarasAdatMin!=""){
             
-            span3.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[2].idojarasAdat + "°C")
+            span3.innerHTML=('<i class="bi bi-sun"></i>  ' +idojaras[2].idojarasAdatMin + "°C")
             footerSlider.appendChild(span3)
         }
         
@@ -172,7 +183,8 @@ async function renderFooter(){
 async function update() {
 
     let date = document.getElementById("dateField");
-    let idojarasAdat = document.getElementById("idojarasField");
+    let idojarasAdatMin = document.getElementById("idojarasFieldMin");
+    let idojarasAdatMax = document.getElementById("idojarasFieldMax");
 
     if (selectedIdojaras.date == date.value) {
         try {
@@ -183,7 +195,9 @@ async function update() {
                 },
                 body: JSON.stringify({
                     newDate: date.value,
-                    newCount: Number(idojarasAdat.value)
+                    newCountMin: Number(idojarasAdatMin.value),
+                    newCountMax:Number(idojarasAdatMax.value)
+
                 })
             });
             let data = await res.json();
@@ -285,12 +299,14 @@ async function del() {
 
 function editIdojaras(index) {
     let date = document.getElementById("dateField");
-    let idojarasAdat = document.getElementById("idojarasField");
+    let idojarasAdatMin = document.getElementById("idojarasFieldMin");
+    let idojarasAdatMax = document.getElementById("idojarasFieldMax");
 
 
     toggleMode(true);
     date.value = idojaras[index].date;
-    idojarasAdat.value = idojaras[index].idojarasAdat
+    idojarasAdatMin.value = idojaras[index].idojarasAdatMin
+    idojarasAdatMax.value = idojaras[index].idojarasAdatMax
     selectedIdojaras = idojaras[index];
 }
 
@@ -328,9 +344,11 @@ async function deleteIdojaras(index) {
 function cancel() {
     toggleMode(false);
     let date = document.querySelector("#dateField");
-    let idojarasAdat = document.querySelector("#idojarasField");
+    let idojarasAdatMin = document.querySelector("#idojarasFieldMin");
+    let idojarasAdatMax = document.querySelector("#idojarasFieldMax");
     date.value = null;
-    idojarasAdat.value = null;
+    idojarasAdatMin.value = null;
+    idojarasAdatMax.value = null;
     selectedIdojaras= null;
 }
 
