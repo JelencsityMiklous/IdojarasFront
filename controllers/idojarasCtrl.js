@@ -14,6 +14,7 @@ async function add(){
     let date = document.querySelector('#dateField').value;
     let idojarasAdatMin = document.querySelector('#idojarasFieldMin').value;
     let idojarasAdatMax = document.querySelector('#idojarasFieldMax').value;
+    let idojarasFajta = document.querySelector('#idojarasFajta').value;
 
     if (date == '' || idojarasAdatMin == '' || idojarasAdatMax == ''){
         showMessage('danger', 'Hiba', 'Nem adtál meg minden adatot!'); 
@@ -37,7 +38,8 @@ async function add(){
                     userId: loggedUser.id, 
                     date: date, 
                     idojarasAdatMin: idojarasAdatMin,
-                    idojarasAdatMax:idojarasAdatMax 
+                    idojarasAdatMax:idojarasAdatMax,
+                    idojarasFajta:idojarasFajta
                 })
             });
             let data = await res.json();
@@ -65,7 +67,8 @@ async function add(){
                     userId: loggedUser.id, 
                     date: date, 
                     idojarasAdatMin: Number(idojaras[idx].idojarasAdatMin) + Number(idojarasAdatMin),
-                    idojarasAdatMax: Number(idojaras[idx].idojarasAdatMax) + Number(idojarasAdatMax)  
+                    idojarasAdatMax: Number(idojaras[idx].idojarasAdatMax) + Number(idojarasAdatMax),
+                    idojarasFajta:idojarasFajta  
                 })
             });
             let data = await res.json();
@@ -110,6 +113,7 @@ function renderIdojaras() {
         let td3 = document.createElement('td');
         let td4 = document.createElement('td');
         let td5 = document.createElement('td');
+        let td6 = document.createElement('td');
         let editBtn = document.createElement('button');
         let deleteBtn = document.createElement('button');
 
@@ -126,20 +130,24 @@ function renderIdojaras() {
         td2.innerHTML = idojaras.date;
         td3.innerHTML = idojaras.idojarasAdatMin;
         td4.innerHTML = idojaras.idojarasAdatMax;
-        td5.appendChild(editBtn);
-        td5.appendChild(deleteBtn);
+        td5.innerHTML = idojaras.idojarasFajta;
+        td6.appendChild(editBtn);
+        td6.appendChild(deleteBtn);
 
         td1.classList.add('text-center');
         td3.classList.add('text-end');
         td4.classList.add('text-end');
         td5.classList.add('text-end');
+        td6.classList.add('text-end');
 
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
         tr.appendChild(td5);
+        tr.appendChild(td6);
         tbody.appendChild(tr);
+
 
     });
 }

@@ -7,7 +7,7 @@ async function getCalendarData2(){
         calEvents = [];
         idojaras.forEach(ido => {
             calEvents.push({
-                title  : 'Lépés: ' + ido.idojarasAdatMin,
+                title  : 'Fok: ' + ido.idojarasAdatMin+'°C-'+ido.idojarasAdatMax+'°C',
                 start  : ido.date
               });
         });

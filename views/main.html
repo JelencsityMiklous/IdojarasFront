@@ -18,7 +18,15 @@
         <label for="idojarasFieldMax" class="form-label">Max fok</label>
         <input type="number" class="form-control" id="idojarasFieldMax">
     </div>
-    
+    <div class="mb-3 col-12 col-lg-4">
+        <select class="form-select" aria-label="Default select example" id="idojarasFajta" >
+            <option value="Napos">Napos</option>
+            <option value="Felhos">Felhős</option>
+            <option value="Esos">Esős</option>
+          </select>
+    </div>
+
+        
     <div class="mb-3 col-12 col-lg-4">
         <button class="btn btn-primary mb-3" id="addBtn" onclick="add()">Hozzáadás</button>
         <button class="btn btn-warning mb-3 hide" id="updateBtn" onclick="update()">Módosítás</button>
@@ -37,6 +45,7 @@
             <th class="text-start">Dátum</th>
             <th class="text-end">Min fok</th>
             <th class="text-end">Max fok</th>
+            <th class="text-end">Fajta</th>
             <th class="text-end">Műveletek</th>
         </tr>
     </thead>
