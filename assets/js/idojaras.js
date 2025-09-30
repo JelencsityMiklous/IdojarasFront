@@ -81,8 +81,10 @@ let render = async (view) => {
             initChart();
             break;
         case "calendar":
-            await getCalendarData()
-             getCalendar();
+            setTimeout(() => {
+                getCalendarData()
+            }, 100); 
+            getCalendar();
             break;
         case "calendar2":
             await getCalendarData2();
@@ -105,6 +107,8 @@ async function getLoggedUser() {
     }
     return loggedUser;
 }
+
+
 
 
 loadTheme()

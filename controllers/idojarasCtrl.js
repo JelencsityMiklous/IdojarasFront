@@ -6,7 +6,10 @@ let footerSlider = document.querySelector('.marquee__group')
 function setDate() {
     let today = new Date().toISOString().split('T')[0];
     let dateField = document.getElementById("dateField");
-    dateField.setAttribute('max', today);
+    dateField.setAttribute('min', today);
+    let nextYear = new Date();
+    nextYear.setFullYear(nextYear.getFullYear() + 1);
+    dateField.setAttribute('max', nextYear.toISOString().split('T')[0]);
 }
 0
 /*--Hozzáadás--*/
@@ -20,9 +23,10 @@ async function add(){
         showMessage('danger', 'Hiba', 'Nem adtál meg minden adatot!'); 
         return;
     }
+
     if(idojarasAdatMax<idojarasAdatMin){
-        showMessage('danger', 'Hiba', 'A max nem lehet kisebb mint a min')
-        return;
+        console.log(idojarasAdatMax)
+        console.log(idojarasAdatMin)
     }
     
     let idx = idojaras.findIndex(idojaras => idojaras.date == date && idojaras.userId == loggedUser.id);

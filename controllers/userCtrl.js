@@ -2,10 +2,8 @@
 const passwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 const emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/* Regisztráció */
 async function registration() {
-    /* await fetch('http://localhost:3000/users')
-    .then(res => res.json())
-    .then(data => console.log(data)) */
 
     let nameField = document.getElementById('nameField');
     let emailField = document.getElementById('emailField');
@@ -59,7 +57,7 @@ async function registration() {
     }
 }
 
-
+/* Bejelentkezés */
 
 async function login() {
     let emailField = document.getElementById('emailField');
@@ -103,11 +101,14 @@ async function login() {
 
 }
 
+/* Kilépés */
 
 function logout() {
     sessionStorage.removeItem('loggedUser');
     getLoggedUser();
 }
+
+/* Profil lekérdezése */
 
 async function getProfile() {
     const nameField = document.getElementById('nameField');
@@ -124,6 +125,8 @@ async function getProfile() {
     }
 
 }
+
+/* Profil módosítása */
 
 async function updateProfile() {
     let nameField = document.getElementById('nameField');
@@ -165,18 +168,28 @@ async function updateProfile() {
     getLoggedUser();
 }
 
-async function updatePassword() {
-    console.log('updatePassword');
-    let currentPasswordField = document.querySelector('#passwordField');
-    let newPasswordField = document.querySelector('#newPasswordField');
-    let confirmPasswordField = document.querySelector('#newPasswordConfirmField');
+/* Jelszó módosítása */
 
-    if (currentPasswordField.value == '' || newPasswordField.value == '' || confirmPasswordField.value == '') {
+async function updatePassword() {
+    const currentPasswordField = document.querySelector('#currentPasswordField');
+    const newPasswordField = document.querySelector('#newPasswordField');
+    const confirmPasswordField = document.querySelector('#newPasswordConfirmField');
+
+    if (!currentPasswordField || !newPasswordField || !confirmPasswordField) {
+        showMessage('danger', 'Hiba', 'Nem találhatóak a mezők!');
+        return;
+    }
+
+    if (
+        currentPasswordField.value.trim() === '' ||
+        newPasswordField.value.trim() === '' ||
+        confirmPasswordField.value.trim() === ''
+    ) {
         showMessage('danger', 'Hiba', 'Nem adtál meg minden adatot!');
         return;
     }
 
-    if (newPasswordField.value != confirmPasswordField.value) {
+    if (newPasswordField.value !== confirmPasswordField.value) {
         showMessage('danger', 'Hiba', 'A két jelszó nem egyezik!');
         return;
     }
@@ -187,26 +200,33 @@ async function updatePassword() {
     }
 
     try {
-        const res = await fetch(`${ServerURL}/users/passmod`, {
+        const response = await fetch(`${ServerURL}/users/passmod`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 id: loggedUser.id,
-                oldPassword: currentPasswordField.value,
-                newPassword: newPasswordField.value
-            })
+                oldPass: currentPasswordField.value,
+                newPass: newPasswordField.value
+            })            
         });
 
-        let data = await res.json();
-        if (res.status == 200){
-            showMessage('success', 'Ok', data.msg);
+        const data = await response.json();
+
+        console.log("Status:", response.status);
+        console.log("Backend válasz:", data);
+
+        if (response.status === 200) {
+            showMessage('success', 'Siker', data.msg || 'Jelszó sikeresen megváltoztatva');
         } else {
-            showMessage('danger', 'Hiba', data.msg);
+            showMessage('danger', 'Hiba', data.msg || 'Sikertelen jelszó módosítás');
         }
+
     } catch (err) {
-        showMessage('danger', 'Hiba', err);
+        console.error("Hiba:", err);
+        showMessage('danger', 'Hiba', err.message || 'Ismeretlen hiba történt!');
     }
 }
+
 

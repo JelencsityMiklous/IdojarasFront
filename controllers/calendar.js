@@ -1,8 +1,16 @@
 let NaptarDate = []
 let NaptarDataMin = [];
 let NaptarDataMax = [];
+let NaptarFajta = [];
+
 
 async function getCalendarData(){
+
+	NaptarDate.length = 0;
+  	NaptarDataMin.length = 0;
+  	NaptarDataMax.length = 0;
+ 	NaptarFajta.length = 0;
+
 try{
 	let res = await fetch(`${ServerURL}/idojaras/users/${loggedUser.id}`);
 	
@@ -13,6 +21,7 @@ try{
 	NaptarDate.push(idojaras.date);
 	NaptarDataMin.push(idojaras.idojarasAdatMin);
 	NaptarDataMax.push(idojaras.idojarasAdatMax);
+	NaptarFajta.push(idojaras.idojarasFajta)
 	});
   }catch(err){
 	  console.log(err);
@@ -23,10 +32,19 @@ try{
 
 }
 
+
 getCalendarData()
 
 async function getCalendar() {
 
+const dataPoints= []
+for (let i = 0; i < NaptarDate.length; i++) {
+    dataPoints.push({
+      label: NaptarDate[i],
+      y: [Number(NaptarDataMin[i]), Number(NaptarDataMax[i])],
+      name: NaptarFajta[i]
+    });
+  }
 
 var chart = new CanvasJS.Chart("chartContainer", {            
 	title:{
@@ -46,18 +64,11 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		fillOpacity: 0.3,
 		color: "#91AAB0",
 		indexLabelFormatter: formatter,
-		dataPoints: [
-			{ label: NaptarDate[0], y: [Number(NaptarDataMin[0]),Number(NaptarDataMax[0])], name: "rainy" },
-			{ label: NaptarDate[1], y: [Number(NaptarDataMin[1]),Number(NaptarDataMax[1])], name: "sunny" },
-			{ label: NaptarDate[2], y: [Number(NaptarDataMin[2]),Number(NaptarDataMax[2])], name: "rainy" },
-			{ label: NaptarDate[3], y: [Number(NaptarDataMin[3]),Number(NaptarDataMax[3])], name: "rainy" },
-			{ label: NaptarDate[4], y: [Number(NaptarDataMin[4]),Number(NaptarDataMax[4])], name: "rainy" },
-			{ label: NaptarDate[5], y: [Number(NaptarDataMin[5]),Number(NaptarDataMax[5])], name: "rainy" },
-			{ label: NaptarDate[6], y: [Number(NaptarDataMin[6]),Number(NaptarDataMax[6])], name: "rainy" }
-		]
+		dataPoints: dataPoints
 	}]
 });
 chart.render();
+
 
 var images = [];    
 
