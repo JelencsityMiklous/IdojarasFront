@@ -227,10 +227,17 @@ async function update() {
     } else {
         try {
             let res = await fetch(`${ServerURL}/idojaras/${selectedIdojaras.id}`, {
-                method: 'DELETE',
+                method: 'P',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({
+                    newDate: date.value,
+                    newCountMin: Number(idojarasAdatMin.value),
+                    newCountMax:Number(idojarasAdatMax.value)
+
+                })
+                
             });
             let data = await res.json();
             if (res.status == 200) {
