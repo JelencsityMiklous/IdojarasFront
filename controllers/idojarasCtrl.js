@@ -19,18 +19,23 @@ async function add(){
     let idojarasAdatMax = document.querySelector('#idojarasFieldMax').value;
     let idojarasFajta = document.querySelector('#idojarasFajta').value;
 
+    if(Number(idojarasAdatMax)<Number(idojarasAdatMin)){
+        showMessage('danger', 'Hiba', 'Nem lehet nagyobb a Min mint a Max!'); 
+        return;
+        
+    }
+
     if (date == '' || idojarasAdatMin == '' || idojarasAdatMax == ''){
         showMessage('danger', 'Hiba', 'Nem adtál meg minden adatot!'); 
         return;
     }
 
-    if(idojarasAdatMax<idojarasAdatMin){
-        console.log(idojarasAdatMax)
-        console.log(idojarasAdatMin)
-    }
+    
+    
     
     let idx = idojaras.findIndex(idojaras => idojaras.date == date && idojaras.userId == loggedUser.id);
     if (idx == -1){
+        
         
         try{
             let res = await fetch(`${ServerURL}/idojaras` , {
@@ -90,6 +95,8 @@ async function add(){
         }
     }
     renderFooter()
+
+
 }
 
 
